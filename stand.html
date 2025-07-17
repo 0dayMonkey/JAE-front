@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Stand</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Espace Stand</h1>
+    <nav>
+        <a href="/index.html">Voir le classement</a>
+    </nav>
+    <div class="container">
+        <form id="login-form">
+            <h2>Connexion</h2>
+            <select id="stand-name" required>
+                <option value="">-- Sélectionnez votre stand --</option>
+            </select>
+            <input type="password" id="pin" placeholder="PIN à 6 chiffres" required maxlength="6">
+            <button type="submit">Se connecter</button>
+        </form>
+
+        <div id="score-section" class="hidden">
+            <h2 id="welcome-stand"></h2>
+            <form id="score-form">
+                <select id="team-select" required>
+                    <option value="">-- Sélectionnez une équipe --</option>
+                </select>
+                <input type="number" id="points" placeholder="Points à ajouter" required min="1">
+                <button type="submit">Ajouter les points</button>
+            </form>
+        </div>
+        
+        <div id="message"></div>
+    </div>
+
+    <script src="js/stand.js"></script>
+</body>
+</html>

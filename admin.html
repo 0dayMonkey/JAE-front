@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Dashboard Admin</h1>
+    <nav>
+        <a href="/index.html">Voir le classement public</a>
+    </nav>
+    <div class="container">
+        <form id="admin-login-form">
+            <h2>Connexion Administrateur</h2>
+            <input type="password" id="admin-password" placeholder="Mot de passe" required>
+            <button type="submit">Se connecter</button>
+        </form>
+
+        <div id="admin-dashboard" class="hidden">
+            <h2>Historique des Scores</h2>
+            <button id="logout-button" style="background-color: var(--color-red); margin-bottom: 1rem;">Se déconnecter</button>
+            <table class="leaderboard">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Équipe</th>
+                        <th>Stand</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody id="log-table-body">
+                    </tbody>
+            </table>
+        </div>
+
+        <div id="message"></div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-const API_URL  = 'https://miaou.vps.webdock.cloud/api';
+const API_URL = 'https://miaou.vps.webdock.cloud/api';
 
 const state = {
     token: null,

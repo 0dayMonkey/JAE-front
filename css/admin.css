@@ -39,7 +39,7 @@ body { font-family: var(--font-family-main); background-color: var(--color-backg
 #login-screen { display: flex; justify-content: center; align-items: center; height: 100vh; }
 .login-container { padding: 2rem; background: var(--color-surface); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
 #admin-login-form { display: flex; flex-direction: column; gap: 1rem; }
-#admin-login-form input { padding: 0.8rem; border: 1px solid #ccc; border-radius: 8px; }
+#admin-login-form input { padding: 0.8rem; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; }
 #admin-login-form button { padding: 0.8rem; border-radius: 8px; border: none; background-color: var(--color-primary); color: white; font-weight: 700; cursor: pointer; }
 
 #dashboard-screen { display: flex; height: 100vh; }
@@ -85,6 +85,11 @@ th { font-weight: 900; }
 .card { display: none; }
 
 @media (max-width: 767px) {
+    #login-screen { padding: 1rem; align-items: flex-start; padding-top: 20vh;}
+    .login-container { width: 100%; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+    #admin-login-form input { font-size: 16px; padding: 1rem; }
+    #admin-login-form button { font-size: 16px; padding: 1rem; }
+
     .sidebar {
         position: fixed;
         left: 0;

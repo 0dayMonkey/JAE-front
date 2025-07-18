@@ -71,8 +71,10 @@ th { font-weight: 900; }
 
 .form-group { margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee; }
 .form-group p { margin: 0 0 0.25rem 0; font-weight: 700; text-align: left; }
-.form-group small { display: block; text-align: left; color: var(--color-text-light); margin-bottom: 0.75rem; }
-.score-adjuster { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem; }
+.form-group small { display: block; text-align: left; color: var(--color-text-light); margin-bottom: 0.75rem;     touch-action: manipulation;
+}
+.score-adjuster { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem;     touch-action: manipulation;
+}
 .score-adjuster button { 
     width: 50px; 
     height: 50px; 
@@ -87,7 +89,8 @@ th { font-weight: 900; }
     padding: 0;
     touch-action: manipulation;
 }
-.score-display { font-size: 1.8rem; font-weight: 700; min-width: 80px; text-align: center; padding: 0.5rem; border-radius: 8px; color: white; }
+.score-display { font-size: 1.8rem; font-weight: 700; min-width: 80px; text-align: center; padding: 0.5rem; border-radius: 8px; color: white;    touch-action: manipulation;
+ }
 
 #message-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 1rem 2rem; border-radius: 8px; color: white; z-index: 2000; font-weight: 700; box-shadow: 0 5px 15px rgba(0,0,0,0.2); opacity: 0; transition: all 0.3s ease; visibility: hidden; }
 #message-container:not(.hidden) { opacity: 1; visibility: visible; }

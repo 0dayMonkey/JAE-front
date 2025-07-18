@@ -20,11 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             teams.forEach((team, index) => {
                 const card = document.createElement('div');
-                card.className = 'leaderboard-card';
+                card.className = `leaderboard-card team-border-${team.name}`;
 
                 card.innerHTML = `
                     <div class="card-rank">#${index + 1}</div>
-                    <h3 class="card-team-name team-${team.name}">${team.name}</h3>
+                    <h3 class="card-team-name team-tag-${team.name}">${team.name}</h3>
                     <div class="card-score">${team.score}</div>
                 `;
                 leaderboardContainer.appendChild(card);

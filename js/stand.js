@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let selectedStandName = null;
     let selectedTeamId = null;
-    let pointsToAdd = 10;
+    let pointsToAdd = 1;
     
     const showMessage = (message, type = 'error') => {
         messageContainer.textContent = message;
@@ -80,6 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 square.classList.add('selected');
                 selectedTeamId = team.id;
+                submitScoreButton.style.backgroundColor = teamColor;
+
             });
             teamSelectionSquares.appendChild(square);
         });
@@ -166,6 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentSelected = document.querySelector('.team-square.selected');
             if (currentSelected) currentSelected.classList.remove('selected');
             selectedTeamId = null;
+            submitScoreButton.style.backgroundColor = 'var(--color-success)';
+
             await updateTeamsDisplay();
 
         } catch (error) {

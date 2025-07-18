@@ -23,6 +23,7 @@ const apiFetch = async (endpoint, options = {}) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${state.token}`
     };
+    // Le endpoint ne commencera plus par /api
     const response = await fetch(`${API_URL}${endpoint}`, options);
     if (response.status === 401 || response.status === 403) {
         logout();
@@ -32,7 +33,13 @@ const apiFetch = async (endpoint, options = {}) => {
         const err = await response.json();
         throw new Error(err.message || 'Erreur API.');
     }
-    return response.json();
+    // Gérer les réponses qui n'ont pas de corps JSON
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.indexOf("application/json") !== -1) {
+        return response.json();
+    } else {
+        return response.text();
+    }
 };
 
 const render = () => {
@@ -50,23 +57,28 @@ const render = () => {
 
 const renderLogs = async () => {
     try {
-        state.logs = await apiFetch('/api/admin/logs');
+        // CORRECTION : Appel sans /api
+        state.logs = await apiFetch('/admin/logs');
         const view = document.getElementById('view-logs');
         let html = `<h2>Historique des Scores</h2><div class="table-container"><table><thead><tr><th>Timestamp</th><th>Équipe</th><th>Stand</th><th>Points</th><th>Actions</th></tr></thead><tbody>`;
-        state.logs.forEach(log => {
-            html += `
-                <tr>
-                    <td>${new Date(log.timestamp).toLocaleString('fr-FR')}</td>
-                    <td>${log.teamName || 'N/A'}</td>
-                    <td>${log.standName || 'N/A'}</td>
-                    <td>${log.points}</td>
-                    <td>
-                        <button class="action-btn" onclick="openEditLogModal('${log.logId}', ${log.points})">✏️</button>
-                        <button class="action-btn" onclick="deleteLog('${log.logId}')">🗑️</button>
-                    </td>
-                </tr>
-            `;
-        });
+        if (state.logs.length > 0) {
+            state.logs.forEach(log => {
+                html += `
+                    <tr>
+                        <td>${new Date(log.timestamp).toLocaleString('fr-FR')}</td>
+                        <td>${log.teamName || 'N/A'}</td>
+                        <td>${log.standName || 'N/A'}</td>
+                        <td>${log.points}</td>
+                        <td>
+                            <button class="action-btn" onclick="openEditLogModal('${log.logId}', ${log.points})">✏️</button>
+                            <button class="action-btn" onclick="deleteLog('${log.logId}')">🗑️</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        } else {
+            html += `<tr><td colspan="5">Aucun log à afficher pour le moment.</td></tr>`;
+        }
         html += `</tbody></table></div>`;
         view.innerHTML = html;
     } catch (error) { showMessage(error.message); }
@@ -103,7 +115,8 @@ async function submitEditLog(logId) {
     const newPointsInput = document.getElementById('edit-points-input');
     const newPoints = newPointsInput.value;
     try {
-        await apiFetch(`/api/scores/${logId}`, {
+        // CORRECTION : Appel sans /api
+        await apiFetch(`/scores/${logId}`, {
             method: 'PUT',
             body: JSON.stringify({ points: parseInt(newPoints, 10) })
         });
@@ -118,7 +131,8 @@ async function submitEditLog(logId) {
 async function deleteLog(logId) {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce score ? Cette action recalculera le total de l\'équipe.')) {
         try {
-            await apiFetch(`/api/scores/${logId}`, { method: 'DELETE' });
+            // CORRECTION : Appel sans /api
+            await apiFetch(`/scores/${logId}`, { method: 'DELETE' });
             showMessage('Score supprimé !', 'success');
             renderLogs();
         } catch (error) {
@@ -131,9 +145,8 @@ const login = async (e) => {
     e.preventDefault();
     const password = document.getElementById('admin-password').value;
     try {
-        // Remplacer par la nouvelle logique de hash
-        // Temporairement, on garde l'ancienne pour la compatibilité
-        const response = await fetch(`${API_URL}/api/auth/admin`, {
+        // CORRECTION : Appel sans /api
+        const response = await fetch(`${API_URL}/auth/admin`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ password })
@@ -176,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Exposer les fonctions nécessaires à la portée globale pour les `onclick` dans le HTML
 window.openEditLogModal = openEditLogModal;
 window.closeModal = closeModal;
 window.submitEditLog = submitEditLog;

@@ -113,3 +113,30 @@ nav a {
     text-decoration: none;
     font-weight: 500;
 }
+
+
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .leaderboard th, .leaderboard td {
+        padding: 0.75rem;
+    }
+
+    input, select, button {
+        font-size: 1.1rem;
+    }
+
+    nav a {
+        margin: 0 0.5rem;
+    }
+}

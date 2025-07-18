@@ -324,7 +324,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Exposer les fonctions de modal à la portée globale pour les onclick
 window.openEditLogModal = openEditLogModal;
 window.submitEditLog = submitEditLog;
 window.deleteLog = deleteLog;

@@ -39,12 +39,12 @@ h1 {
 .container {
     width: 100%;
     max-width: 900px;
-    background: transparent; /* Le conteneur devient transparent */
+    background: transparent;
     padding: 0;
     box-shadow: none;
 }
 
-/* --- GRILLE DE SCORE - NOUVELLE VERSION --- */
+/* --- GRILLE DE SCORE - VERSION FINALE --- */
 .leaderboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -52,57 +52,53 @@ h1 {
 }
 
 .leaderboard-card {
-    color: var(--color-text-light); /* Texte blanc pour toutes les cartes */
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border-radius: 16px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease-in-out;
 }
 
-.card-rank {
-    font-size: 1.5rem;
+.card-rank, .card-score {
+    font-size: 2rem;
     font-weight: 900;
-    opacity: 0.8;
-    margin-bottom: 0.5rem;
+    color: var(--color-text-light);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-.card-team-name {
+.card-team-tag {
+    color: var(--color-text-light);
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    margin: 0.5rem 0;
+    width: 80%;
+    text-align: center;
     font-size: 1.8rem;
     font-weight: 700;
-    margin: 0.5rem 0;
-}
-
-.card-score {
-    font-size: 3.5rem;
-    font-weight: 900;
-    margin-top: 1rem;
-}
-
-/* --- Couleurs de fond et ombres portées par équipe --- */
-.team-Jaune {
-    background-color: #f1c40f;
-    box-shadow: 0 5px 20px rgba(241, 196, 15, 0.4);
-}
-.team-Rouge {
-    background-color: #e74c3c;
-    box-shadow: 0 5px 20px rgba(231, 76, 60, 0.4);
-}
-.team-Vert {
-    background-color: #2ecc71;
-    box-shadow: 0 5px 20px rgba(46, 204, 113, 0.4);
-}
-.team-Bleu {
-    background-color: #3498db;
-    box-shadow: 0 5px 20px rgba(52, 152, 219, 0.4);
-}
-.team-Violet {
-    background-color: #9b59b6;
-    box-shadow: 0 5px 20px rgba(155, 89, 182, 0.4);
 }
 
 .leaderboard-card:hover {
     transform: scale(1.05);
 }
+
+/* --- Couleurs par équipe --- */
+.team-Jaune { background-color: rgba(241, 196, 15, 0.15); }
+.team-Jaune .card-team-tag { background-color: #f1c40f; box-shadow: 0 4px 15px rgba(241, 196, 15, 0.4); }
+
+.team-Rouge { background-color: rgba(231, 76, 60, 0.15); }
+.team-Rouge .card-team-tag { background-color: #e74c3c; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4); }
+
+.team-Vert { background-color: rgba(46, 204, 113, 0.15); }
+.team-Vert .card-team-tag { background-color: #2ecc71; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4); }
+
+.team-Bleu { background-color: rgba(52, 152, 219, 0.15); }
+.team-Bleu .card-team-tag { background-color: #3498db; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4); }
+
+.team-Violet { background-color: rgba(155, 89, 182, 0.15); }
+.team-Violet .card-team-tag { background-color: #9b59b6; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4); }
+
 
 /* Styles pour les formulaires et autres pages */
 .form-container {

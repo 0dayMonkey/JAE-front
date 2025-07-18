@@ -3,7 +3,7 @@
 :root {
     --e-global-color-primary: #50ACC4;
     --e-global-color-secondary: #303030;
-    --e-global-color-text: #303030; 
+    --e-global-color-text: #303030;
     --e-global-color-accent: #FF8282;
     --e-global-color-background: #FBFBFB;
     --e-global-typography-primary-font-family: "Montserrat", sans-serif;
@@ -30,15 +30,14 @@ body {
 h1 {
     font-family: "Montserrat", Sans-serif;
     text-transform: uppercase;
-    color: var(--e-global-color-primary);
-    border-color: var(--e-global-color-primary);
-    border-width: 1px 1px 1px 1px;
-    border-radius: 10px 10px 10px 10px;
-    padding: 10px 25px 10px 25px;
+    background-color: var(--e-global-color-primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px 15px 30px;
     font-size: 2.5rem;
     font-weight: 900;
     margin-bottom: 3rem;
-    background-color: white;
 }
 
 .container {
@@ -63,17 +62,14 @@ h1 {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.2s ease;
     min-height: 200px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
 
 .leaderboard-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    transform: translateY(-5px);
 }
 
-/* Application dynamique de la couleur de bordure par équipe */
 .team-border-Jaune { border-color: var(--team-color-Jaune); }
 .team-border-Rouge { border-color: var(--team-color-Rouge); }
 .team-border-Vert { border-color: var(--team-color-Vert); }
@@ -99,7 +95,6 @@ h1 {
     text-transform: uppercase;
 }
 
-/* Application dynamique de la couleur de fond du tag */
 .team-tag-Jaune { background-color: var(--team-color-Jaune); }
 .team-tag-Rouge { background-color: var(--team-color-Rouge); }
 .team-tag-Vert { background-color: var(--team-color-Vert); }

@@ -11,6 +11,11 @@
     --shadow-subtle: 0 4px 15px rgba(0,0,0,0.08);
     --shadow-strong: 0 8px 25px rgba(0,0,0,0.15);
     --font-family-main: "Montserrat", sans-serif;
+    --team-color-Jaune: #f1c40f;
+    --team-color-Rouge: #e74c3c;
+    --team-color-Vert: #2ecc71;
+    --team-color-Bleu: #3498db;
+    --team-color-Violet: #9b59b6;
 }
 
 body {
@@ -51,7 +56,6 @@ h2, h3 {
     margin-bottom: 1.5rem;
 }
 
-/* Grille pour les boutons de stand */
 .stand-buttons-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -80,7 +84,6 @@ h2, h3 {
     box-shadow: var(--shadow-strong);
 }
 
-/* Modale pour le PIN */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -123,7 +126,25 @@ h2, h3 {
     gap: 1rem;
 }
 
-/* Section de score */
+.modal-actions button {
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.modal-actions button[type="submit"] {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.modal-actions button[type="button"] {
+    background-color: #ccc;
+    color: #333;
+}
+
 #score-section {
     max-width: 900px;
     margin: 0 auto;
@@ -134,6 +155,13 @@ h2, h3 {
     margin: -1rem auto 2rem auto;
     background-color: #777;
     color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.2s ease;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
 }
 
 #teams-display-container {
@@ -162,49 +190,6 @@ h2, h3 {
     color: var(--color-primary);
 }
 
-/* Formulaire d'ajout de points */
-#score-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    background-color: var(--color-surface);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow-strong);
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-input, select, button {
-    padding: 1rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-family: var(--font-family-main);
-}
-
-button {
-    border: none;
-    cursor: pointer;
-    font-weight: 700;
-    transition: background-color 0.2s ease;
-}
-
-#score-form button, .modal-actions button[type="submit"] {
-    background-color: var(--color-primary);
-    color: white;
-}
-
-#score-form button:hover, .modal-actions button[type="submit"]:hover {
-    filter: brightness(1.1);
-}
-
-.modal-actions button[type="button"] {
-    background-color: #ccc;
-    color: #333;
-}
-
-/* Utilitaires */
 .hidden {
     display: none !important;
 }
@@ -221,5 +206,82 @@ button {
     font-weight: 700;
     box-shadow: var(--shadow-strong);
 }
-#message-container.success { background-color: var(--color-success); }
-#message-container.error { background-color: var(--color-error); }
+
+#message-container.success {
+    background-color: var(--color-success);
+}
+
+#message-container.error {
+    background-color: var(--color-error);
+}
+
+#add-points-interface {
+    background-color: var(--color-surface);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-strong);
+    max-width: 600px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+#team-selection-squares {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.team-square {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.team-square.selected {
+    border-color: var(--color-primary);
+    transform: scale(1.1);
+}
+
+.points-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.points-selector button {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+    font-weight: 900;
+    border-radius: 50%;
+    border: 2px solid var(--color-primary);
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+    cursor: pointer;
+}
+
+#points-display {
+    font-size: 2rem;
+    font-weight: 700;
+    min-width: 60px;
+    text-align: center;
+}
+
+#submit-score-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--color-success);
+    color: white;
+    cursor: pointer;
+}

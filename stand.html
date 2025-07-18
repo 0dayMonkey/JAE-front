@@ -15,22 +15,28 @@
     <main id="app-container">
         <section id="stand-selection-section">
             <h2>Sélectionnez votre stand</h2>
-            <div id="stand-buttons-container" class="stand-buttons-grid">
-            </div>
+            <div id="stand-buttons-container" class="stand-buttons-grid"></div>
         </section>
 
         <section id="score-section" class="hidden">
             <h2 id="welcome-stand"></h2>
             <button id="logout-button">Changer de stand</button>
             <div id="teams-display-container"></div>
-            <form id="score-form">
+            
+            <div id="add-points-interface">
                 <h3>Ajouter des points</h3>
-                <select id="team-select" required>
-                    <option value="">-- Sélectionnez une équipe --</option>
-                </select>
-                <input type="number" id="points" placeholder="Points à ajouter" required min="1">
-                <button type="submit">Valider les points</button>
-            </form>
+                <p>1. Choisissez une équipe :</p>
+                <div id="team-selection-squares"></div>
+
+                <p>2. Choisissez les points :</p>
+                <div class="points-selector">
+                    <button id="btn-minus">-</button>
+                    <span id="points-display">10</span>
+                    <button id="btn-plus">+</button>
+                </div>
+
+                <button id="submit-score-button">Valider</button>
+            </div>
         </section>
     </main>
 
@@ -48,7 +54,6 @@
     </div>
 
     <div id="message-container"></div>
-
     <script src="js/stand.js"></script>
 </body>
 </html>

@@ -29,8 +29,8 @@
                     <button data-view="stands">🏪 Stands</button>
                 </nav>
                 <div class="sidebar-footer">
-                    <a href="index.html" class="nav-link">Voir le site public</a>
-                    <button id="logout-button">Déconnexion</button>
+                    <a href="index.html" class="btn btn-secondary">Voir le site public</a>
+                    <button id="logout-button" class="btn btn-danger">Déconnexion</button>
                 </div>
             </aside>
             <main class="main-content">
@@ -46,6 +46,16 @@
             <h3 id="modal-title"></h3>
             <div id="modal-body"></div>
             <div id="modal-actions"></div>
+        </div>
+    </div>
+    
+    <div id="confirm-container" class="modal-overlay hidden">
+        <div class="modal-content confirm-modal">
+            <p id="confirm-text"></p>
+            <div id="confirm-actions">
+                <button id="confirm-cancel" class="btn btn-secondary">Annuler</button>
+                <button id="confirm-ok" class="btn btn-danger">Confirmer</button>
+            </div>
         </div>
     </div>
     

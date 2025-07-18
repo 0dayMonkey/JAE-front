@@ -1,5 +1,5 @@
 // Remplacez par l'URL de votre API backend
-const API_URL = 'https://miaou.vps.webdock.cloud:3000/api';
+const API_URL = 'https://miaou.vps.webdock.cloud/api';
 
 document.addEventListener('DOMContentLoaded', () => {
     const leaderboardBody = document.getElementById('leaderboard-body');

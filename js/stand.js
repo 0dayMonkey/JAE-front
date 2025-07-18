@@ -1,4 +1,4 @@
-const API_URL = 'https://miaou.vps.webdock.cloud:3000/api';
+const API_URL = 'https://miaou.vps.webdock.cloud/api';
 
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');

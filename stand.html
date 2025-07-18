@@ -3,37 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion Stand</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>JAE - Espace Stand</title>
+    <link rel="stylesheet" href="css/stand.css">
 </head>
 <body>
-    <h1>Espace Stand</h1>
-    <nav>
-        <a href="index.html">Voir le classement</a>
-    </nav>
-    <div class="container">
-        <form id="login-form">
-            <h2>Connexion</h2>
-            <select id="stand-name" required>
-                <option value="">-- Sélectionnez votre stand --</option>
-            </select>
-            <input type="password" id="pin" placeholder="PIN à 6 chiffres" required maxlength="6">
-            <button type="submit">Se connecter</button>
-        </form>
+    <header>
+        <h1>Espace Stand</h1>
+        <a href="index.html" class="nav-link">Voir le classement public</a>
+    </header>
 
-        <div id="score-section" class="hidden">
+    <main id="app-container">
+        <section id="stand-selection-section">
+            <h2>Sélectionnez votre stand</h2>
+            <div id="stand-buttons-container" class="stand-buttons-grid">
+            </div>
+        </section>
+
+        <section id="score-section" class="hidden">
             <h2 id="welcome-stand"></h2>
+            <button id="logout-button">Changer de stand</button>
+            <div id="teams-display-container"></div>
             <form id="score-form">
+                <h3>Ajouter des points</h3>
                 <select id="team-select" required>
                     <option value="">-- Sélectionnez une équipe --</option>
                 </select>
                 <input type="number" id="points" placeholder="Points à ajouter" required min="1">
-                <button type="submit">Ajouter les points</button>
+                <button type="submit">Valider les points</button>
+            </form>
+        </section>
+    </main>
+
+    <div id="pin-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="pin-modal-title"></h3>
+            <form id="pin-form">
+                <input type="password" id="pin-input" placeholder="Code PIN à 6 chiffres" required maxlength="6" inputmode="numeric">
+                <div class="modal-actions">
+                    <button type="submit">Se connecter</button>
+                    <button type="button" id="cancel-pin">Annuler</button>
+                </div>
             </form>
         </div>
-        
-        <div id="message"></div>
     </div>
+
+    <div id="message-container"></div>
 
     <script src="js/stand.js"></script>
 </body>

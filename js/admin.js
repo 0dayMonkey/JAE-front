@@ -12,9 +12,12 @@ const showMessage = (message, type = 'error') => {
     const container = document.getElementById('message-container');
     if (!container) return;
     container.textContent = message;
-    container.className = type;
+    container.className = ''; // Reset classes
+    container.classList.add(type);
     container.classList.remove('hidden');
-    setTimeout(() => container.classList.add('hidden'), 4000);
+    setTimeout(() => {
+        container.classList.add('hidden');
+    }, 4000);
 };
 
 const apiFetch = async (endpoint, options = {}) => {
@@ -26,10 +29,10 @@ const apiFetch = async (endpoint, options = {}) => {
     const response = await fetch(`${API_URL}${endpoint}`, options);
     if (response.status === 401 || response.status === 403) {
         logout();
-        throw new Error('Session expirée.');
+        throw new Error('Session expirée ou non autorisée.');
     }
     if (!response.ok) {
-        const err = await response.json();
+        const err = await response.json().catch(() => ({ message: 'Erreur inconnue du serveur.' }));
         throw new Error(err.message || 'Erreur API.');
     }
     const contentType = response.headers.get("content-type");
@@ -73,7 +76,7 @@ const renderLogs = async () => {
                 `;
             });
         } else {
-            html += `<tr><td colspan="5">Aucun log à afficher.</td></tr>`;
+            html += `<tr><td colspan="5" style="text-align:center;">Aucun log à afficher.</td></tr>`;
         }
         html += `</tbody></table></div>`;
         view.innerHTML = html;
@@ -127,7 +130,6 @@ function closeModal() {
     document.getElementById('modal-container').classList.add('hidden');
 }
 
-// --- Modals & Actions pour les LOGS ---
 function openEditLogModal(logId, currentPoints) {
     document.getElementById('modal-title').innerText = 'Modifier le Score d\'un Log';
     document.getElementById('modal-body').innerHTML = `<p>Nouvelle valeur des points :</p><input type="number" id="edit-points-input" value="${currentPoints}" class="modal-input">`;
@@ -155,7 +157,6 @@ async function deleteLog(logId) {
     }
 }
 
-// --- Modals & Actions pour les STANDS ---
 function openCreateStandModal() {
     document.getElementById('modal-title').innerText = 'Créer un nouveau Stand';
     document.getElementById('modal-body').innerHTML = `
@@ -204,14 +205,57 @@ async function submitResetPin(standId) {
     } catch (error) { showMessage(error.message); }
 }
 
-// --- Modals & Actions pour les TEAMS (prochainement) ---
 function openManageTeamModal(teamId, teamName, currentScore) {
-    // Cette fonction sera à implémenter si vous voulez la gestion par équipe
-    showMessage(`La gestion de l'équipe ${teamName} sera bientôt disponible.`);
+    document.getElementById('modal-title').innerText = `Gérer l'équipe : ${teamName}`;
+    const body = document.getElementById('modal-body');
+    body.innerHTML = `
+        <div class="team-management-modal">
+            <div class="form-group">
+                <p>Définir un nouveau score total</p>
+                <small>Remplace le score actuel (${currentScore}) par cette valeur. N'ajoute pas de log.</small>
+                <input type="number" id="set-score-input" class="modal-input" placeholder="Ex: 500">
+            </div>
+            <div class="form-group">
+                <p>Ajuster le score</p>
+                <small>Ajoute ou retire des points (ex: 50 ou -25). Crée un log au nom de "Admin".</small>
+                <input type="number" id="adjust-score-input" class="modal-input" placeholder="Ex: -50">
+            </div>
+        </div>
+    `;
+    const actions = document.getElementById('modal-actions');
+    actions.innerHTML = `
+        <button class="btn-secondary" onclick="closeModal()">Annuler</button>
+        <button class="btn-primary" onclick="submitManageTeam('${teamId}')">Valider les changements</button>
+    `;
+    document.getElementById('modal-container').classList.remove('hidden');
 }
 
+async function submitManageTeam(teamId) {
+    const setScoreInput = document.getElementById('set-score-input');
+    const adjustScoreInput = document.getElementById('adjust-score-input');
+    const scoreToSet = setScoreInput.value;
+    const scoreToAdjust = adjustScoreInput.value;
 
-// --- Connexion & Initialisation ---
+    try {
+        if (scoreToSet !== '' && scoreToAdjust !== '') {
+            throw new Error("Veuillez n'utiliser qu'un seul champ à la fois.");
+        }
+        if (scoreToSet !== '') {
+            await apiFetch(`/admin/teams/${teamId}/set`, { method: 'PUT', body: JSON.stringify({ score: parseInt(scoreToSet, 10) }) });
+            showMessage('Score total défini avec succès !', 'success');
+        } else if (scoreToAdjust !== '') {
+            await apiFetch(`/admin/teams/${teamId}/adjust`, { method: 'POST', body: JSON.stringify({ points: parseInt(scoreToAdjust, 10) }) });
+            showMessage('Score ajusté avec succès !', 'success');
+        } else {
+            throw new Error("Aucun changement à appliquer.");
+        }
+        closeModal();
+        renderTeams();
+    } catch (error) {
+        showMessage(error.message);
+    }
+}
+
 const login = async (e) => {
     e.preventDefault();
     const password = document.getElementById('admin-password').value;
@@ -263,3 +307,4 @@ window.toggleStand = toggleStand;
 window.openResetPinModal = openResetPinModal;
 window.submitResetPin = submitResetPin;
 window.openManageTeamModal = openManageTeamModal;
+window.submitManageTeam = submitManageTeam;

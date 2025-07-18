@@ -9,10 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const teamSelect = document.getElementById('team-select');
     const welcomeStand = document.getElementById('welcome-stand');
 
-    // Charger les équipes et les stands pour les menus déroulants
     const initData = async () => {
         try {
             const response = await fetch(`${API_URL}/init-data`);
+            if (!response.ok) {
+                throw new Error('Could not fetch initial data.');
+            }
             const data = await response.json();
             
             data.stands.forEach(stand => {
@@ -30,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     initData();
 
-
-    // Gestion de la connexion
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const standName = standNameSelect.value;
@@ -44,7 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ standName, pin })
             });
 
-            if (!response.ok) throw new Error(await response.text());
+            if (!response.ok) {
+                throw new Error(await response.text());
+            }
             
             const { accessToken } = await response.json();
             sessionStorage.setItem('jwt', accessToken);
@@ -58,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Gestion de l'ajout de score
     scoreForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const teamId = teamSelect.value;
@@ -80,11 +81,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ teamId, points })
             });
 
-            if (!response.ok) throw new Error(await response.json().then(e => e.message));
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.message);
+            }
 
             const result = await response.json();
             showMessage(result.message, 'success');
-            scoreForm.reset(); // Vider le formulaire
+            scoreForm.reset();
         } catch (error) {
             showMessage(`Erreur : ${error.message}`, 'error');
         }
@@ -92,6 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showMessage(msg, type = '') {
         messageDiv.textContent = msg;
-        messageDiv.className = type; // 'success' ou 'error'
+        messageDiv.className = type;
     }
 });

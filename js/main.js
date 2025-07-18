@@ -1,4 +1,3 @@
-// Remplacez par l'URL de votre API backend
 const API_URL = 'https://miaou.vps.webdock.cloud/api';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error('Network response was not ok');
             const teams = await response.json();
 
-            leaderboardBody.innerHTML = ''; // Vider le tableau
+            leaderboardBody.innerHTML = ''; 
             
             teams.forEach((team, index) => {
                 const row = document.createElement('tr');
@@ -27,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Charger les scores immédiatement et rafraîchir toutes les 10 secondes
     fetchScores();
     setInterval(fetchScores, 10000);
 });

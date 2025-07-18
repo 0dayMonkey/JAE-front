@@ -1,4 +1,4 @@
-const API_URL = 'https://miaou.vps.webdock.cloud/api'; // Mettez l'IP de votre VPS ici
+const API_URL = 'https://miaou.vps.webdock.cloud/api';
 
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('admin-login-form');
@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageDiv = document.getElementById('message');
     const logoutButton = document.getElementById('logout-button');
 
-    // --- LOGIQUE DE CONNEXION ---
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const password = document.getElementById('admin-password').value;
@@ -19,10 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ password })
             });
 
-            if (!response.ok) throw new Error('Mot de passe incorrect.');
+            if (!response.ok) {
+                throw new Error('Mot de passe incorrect.');
+            }
 
             const { accessToken } = await response.json();
-            sessionStorage.setItem('jwt_admin', accessToken); // Stocker le token
+            sessionStorage.setItem('jwt_admin', accessToken);
             
             showDashboard();
         } catch (error) {
@@ -30,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- LOGIQUE DU DASHBOARD ---
     const fetchLogs = async () => {
         const token = sessionStorage.getItem('jwt_admin');
         if (!token) {
@@ -44,16 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.status === 401 || response.status === 403) {
-                 // Si le token est invalide ou expiré
                 sessionStorage.removeItem('jwt_admin');
                 showLogin();
                 throw new Error('Session expirée, veuillez vous reconnecter.');
             }
-            if (!response.ok) throw new Error('Erreur réseau.');
+            if (!response.ok) {
+                throw new Error('Erreur réseau.');
+            }
 
             const logs = await response.json();
             
-            logTableBody.innerHTML = ''; // Vider le tableau
+            logTableBody.innerHTML = '';
             if (logs.length === 0) {
                 logTableBody.innerHTML = '<tr><td colspan="4">Aucun score enregistré pour le moment.</td></tr>';
             } else {
@@ -74,12 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    // --- GESTION DE L'AFFICHAGE ET DE LA SESSION ---
     function showDashboard() {
         loginForm.classList.add('hidden');
         dashboard.classList.remove('hidden');
         showMessage('');
-        fetchLogs(); // Charger les données dès que le dashboard est affiché
+        fetchLogs();
     }
 
     function showLogin() {
@@ -99,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         messageDiv.className = type;
     }
     
-    // Au chargement de la page, vérifier si l'utilisateur est déjà connecté
     if (sessionStorage.getItem('jwt_admin')) {
         showDashboard();
     }

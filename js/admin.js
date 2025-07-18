@@ -100,7 +100,7 @@ const renderLogs = async () => {
         if (isMobile()) {
             view.innerHTML = state.logs.length > 0 ? state.logs.map(log => {
                 const teamNameClass = log.teamName ? `team-${log.teamName.charAt(0).toUpperCase() + log.teamName.slice(1)}` : '';
-                return `<br>
+                return `
                 <div class="card log-card ${teamNameClass}">
                     <div class="details">
                         <span class="info"><strong>Équipe:</strong> ${log.teamName || 'N/A'}</span>

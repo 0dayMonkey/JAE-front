@@ -1,189 +1,194 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-:root {
-    --color-primary: #1abc9c;
-    --color-primary-darker: #16a085;
-    --color-secondary: #2c3e50;
-    --color-background: #ecf0f1;
-    --color-surface: #ffffff;
-    --color-text: #34495e;
-    --color-red: #e74c3c;
-    --color-green: #2ecc71;
-    --color-border: #bdc3c7;
-    --shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
-body {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: var(--color-background);
-    color: var(--color-text);
-    margin: 0;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h1 {
-    background-color: var(--color-secondary);
-    color: var(--color-surface);
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-    font-size: 2.5rem;
-    text-align: center;
-    box-shadow: var(--shadow);
-}
-
-h2 {
-    text-align: center;
-    color: var(--color-secondary);
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-}
-
-.container {
-    width: 100%;
-    max-width: 800px;
-    background: var(--color-surface);
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-}
-
-.leaderboard {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-}
-
-.leaderboard th, .leaderboard td {
-    padding: 1rem 1.5rem;
-    text-align: left;
-    border-bottom: 1px solid var(--color-border);
-}
-
-.leaderboard th {
-    font-weight: 600;
-    color: var(--color-secondary);
-    background-color: rgba(44, 62, 80, 0.05);
-}
-
-.leaderboard tr:last-child td {
-    border-bottom: none;
-}
-
-.leaderboard tr:nth-child(even) {
-    background-color: #f8f9fa;
-}
-
-.team-Jaune { color: #f1c40f; font-weight: bold; }
-.team-Rouge { color: #c0392b; font-weight: bold; }
-.team-Vert { color: #27ae60; font-weight: bold; }
-.team-Bleu { color: #3498db; font-weight: bold; }
-.team-Violet { color: #8e44ad; font-weight: bold; }
-
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
-input, select, button {
-    padding: 1rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--color-border);
-    font-family: 'Poppins', sans-serif;
-    transition: all 0.2s ease-in-out;
-}
-
-input:focus, select:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.3);
-}
-
-button {
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-button:hover {
-    background-color: var(--color-primary-darker);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
-}
-
-.hidden {
-    display: none;
-}
-
-#message {
-    text-align: center;
-    padding: 1rem;
-    margin-top: 1rem;
-    border-radius: 8px;
-    font-weight: 600;
-    border: 1px solid transparent;
-}
-
-.success {
-    background-color: rgba(46, 204, 113, 0.1);
-    color: var(--color-green);
-    border-color: var(--color-green);
-}
-
-.error {
-    background-color: rgba(231, 76, 60, 0.1);
-    color: var(--color-red);
-    border-color: var(--color-red);
-}
-
-nav {
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-nav a {
-    margin: 0 1rem;
-    color: var(--color-secondary);
-    text-decoration: none;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: all 0.2s ease-in-out;
-}
-
-nav a:hover {
-    background-color: rgba(44, 62, 80, 0.1);
-}
-
-#logout-button {
-    background-color: var(--color-red);
-}
-#logout-button:hover {
-    background-color: #c0392b;
-}
-
-@media (max-width: 600px) {
-    body {
-        padding: 1rem;
-    }
-    h1 {
-        font-size: 1.8rem;
-    }
-    .container {
-        padding: 1.5rem;
-    }
-    .leaderboard th, .leaderboard td {
-        padding: 0.75rem;
-    }
-    input, select, button {
-        font-size: 1.1rem;
-    }
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+ 
+ :root {
+     --color-primary: #5bc0de; /* Updated primary color */
+     --color-primary-darker: #3aabd0;
+     --color-secondary: #2c3e50;
+     --color-background: #ecf0f1;
+     --color-surface: #ffffff;
+     --color-text: #34495e;
+     --color-red: #e74c3c;
+     --color-green: #2ecc71;
+     --color-border: #bdc3c7;
+     --shadow: 0 4px 15px rgba(0,0,0,0.08);
+     --glow: 0 0 10px rgba(91, 192, 222, 0.7); /* Glow effect color */
+ }
+ 
+ body {
+     font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* Updated font */
+     background-color: var(--color-background);
+     color: var(--color-text);
+     margin: 0;
+     padding: 2rem;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+ }
+ 
+ h1 {
+     background-color: var(--color-secondary);
+     color: var(--color-surface);
+     padding: 1rem 2rem;
+     border-radius: 8px;
+     margin-bottom: 2rem;
+     font-size: 2.5rem;
+     text-align: center;
+     box-shadow: var(--shadow);
+ }
+ 
+ h2 {
+     text-align: center;
+     color: var(--color-secondary);
+     font-weight: 600;
+     margin-bottom: 1.5rem;
+ }
+ 
+ .container {
+     width: 100%;
+     max-width: 800px;
+     background: var(--color-surface);
+     padding: 2.5rem;
+     border-radius: 12px;
+     box-shadow: var(--shadow);
+ }
+ 
+ .leaderboard {
+     width: 100%;
+     border-collapse: collapse;
+     margin-top: 1rem;
+ }
+ 
+ .leaderboard th, .leaderboard td {
+     padding: 1rem 1.5rem;
+     text-align: left;
+     border-bottom: 1px solid var(--color-border);
+ }
+ 
+ .leaderboard th {
+     font-weight: 600;
+     color: var(--color-secondary);
+     background-color: rgba(44, 62, 80, 0.05);
+ }
+ 
+ .leaderboard tr:last-child td {
+     border-bottom: none;
+ }
+ 
+ .leaderboard tr:nth-child(even) {
+     background-color: #f8f9fa;
+ }
+ 
+ .team-Jaune { color: #f1c40f; font-weight: bold; }
+ .team-Rouge { color: #c0392b; font-weight: bold; }
+ .team-Vert { color: #27ae60; font-weight: bold; }
+ .team-Bleu { color: #3498db; font-weight: bold; }
+ .team-Violet { color: #8e44ad; font-weight: bold; }
+ 
+ 
+ form {
+     display: flex;
+     flex-direction: column;
+     gap: 1.25rem;
+ }
+ 
+ input, select, button {
+     padding: 1rem;
+     font-size: 1rem;
+     border-radius: 8px;
+     border: 1px solid var(--color-border);
+     font-family: 'Montserrat', sans-serif; /* Updated font */
+     transition: all 0.2s ease-in-out;
+ }
+ 
+ input:focus, select:focus {
+     outline: none;
+     border-color: var(--color-primary);
+     box-shadow: 0 0 0 3px rgba(91, 192, 222, 0.3); /* Updated focus glow */
+ }
+ 
+ button {
+     background-color: var(--color-primary);
+     color: white;
+     border: none;
+     cursor: pointer;
+     font-weight: 600;
+     box-shadow: var(--glow); /* Initial button glow */
+ }
+ 
+ button:hover {
+     background-color: var(--color-primary-darker);
+     transform: translateY(-2px);
+     box-shadow: 0 0 0 5px rgba(91, 192, 222, 0.5); /* Hover glow */
+ }
+ 
+ .hidden {
+     display: none;
+ }
+ 
+ #message {
+     text-align: center;
+     padding: 1rem;
+     margin-top: 1rem;
+     border-radius: 8px;
+     font-weight: 600;
+     border: 1px solid transparent;
+ }
+ 
+ .success {
+     background-color: rgba(46, 204, 113, 0.1);
+     color: var(--color-green);
+     border-color: var(--color-green);
+ }
+ 
+ .error {
+     background-color: rgba(231, 76, 60, 0.1);
+     color: var(--color-red);
+     border-color: var(--color-red);
+ }
+ 
+ nav {
+     margin-bottom: 2rem;
+     text-align: center;
+ }
+ 
+ nav a {
+     margin: 0 1rem;
+     color: var(--color-secondary);
+     text-decoration: none;
+     font-weight: 600;
+     padding: 0.5rem 1rem;
+     border-radius: 8px;
+     transition: all 0.2s ease-in-out;
+ }
+ 
+ nav a:hover {
+     background-color: rgba(44, 62, 80, 0.1);
+     box-shadow: 0 0 5px rgba(44, 62, 80, 0.3); /* Subtle hover glow on nav links */
+ }
+ 
+ #logout-button {
+     background-color: var(--color-red);
+     box-shadow: var(--glow); /* Logout button glow */
+ }
+ #logout-button:hover {
+     background-color: #c0392b;
+     box-shadow: 0 0 0 5px rgba(91, 192, 222, 0.5); /* Hover glow */
+ }
+ 
+ @media (max-width: 600px) {
+     body {
+         padding: 1rem;
+     }
+     h1 {
+         font-size: 1.8rem;
+     }
+     .container {
+         padding: 1.5rem;
+     }
+     .leaderboard th, .leaderboard td {
+         padding: 0.75rem;
+     }
+     input, select, button {
+         font-size: 1.1rem;
+     }
+ }

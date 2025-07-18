@@ -117,7 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ standName: selectedStandName, pin })
             });
-            if (!response.ok) throw new Error('PIN incorrect.');
+            if (!response.ok) {
+                const errorData = await response.text();
+                throw new Error(errorData || 'PIN incorrect.');
+            }
 
             const { accessToken } = await response.json();
             sessionStorage.setItem('jwt', accessToken);

@@ -8,7 +8,7 @@ const state = {
     stands: []
 };
 
-// --- Fonctions Utilitaires ---
+const isMobile = () => window.innerWidth < 768;
 
 const showMessage = (message, type = 'error') => {
     const container = document.getElementById('message-container');
@@ -61,13 +61,24 @@ function closeModal() {
     document.getElementById('modal-container').classList.add('hidden');
 }
 
-// --- Fonctions de Rendu des Vues ---
+const switchView = (viewName) => {
+    state.currentView = viewName;
+    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+    document.getElementById(`view-${viewName}`).classList.remove('hidden');
+    
+    const navButtons = document.querySelectorAll('.sidebar nav button');
+    navButtons.forEach(b => b.classList.remove('active'));
+    document.querySelector(`.sidebar nav button[data-view="${viewName}"]`).classList.add('active');
+
+    if (isMobile()) {
+        document.getElementById('mobile-header-title').textContent = document.querySelector(`.sidebar nav button[data-view="${viewName}"]`).textContent;
+        toggleNav();
+    }
+    
+    render();
+};
 
 const render = () => {
-    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
-    document.getElementById(`view-${state.currentView}`).classList.remove('hidden');
-    document.querySelectorAll('.sidebar nav button').forEach(b => b.classList.remove('active'));
-    document.querySelector(`.sidebar nav button[data-view="${state.currentView}"]`).classList.add('active');
     switch (state.currentView) {
         case 'logs':
             renderLogs();
@@ -85,16 +96,31 @@ const renderLogs = async () => {
     try {
         state.logs = await apiFetch('/admin/logs');
         const view = document.getElementById('view-logs');
-        let html = `<h2>Historique des Scores</h2><div class="table-container"><table><thead><tr><th>Timestamp</th><th>Équipe</th><th>Stand</th><th>Points</th><th>Actions</th></tr></thead><tbody>`;
-        if (state.logs.length > 0) {
-            state.logs.forEach(log => {
-                html += `<tr><td>${new Date(log.timestamp).toLocaleString('fr-FR')}</td><td>${log.teamName || 'N/A'}</td><td>${log.standName || 'N/A'}</td><td>${log.points}</td><td><button class="action-btn" onclick="openEditLogModal('${log.logId}', ${log.points})">✏️</button><button class="action-btn" onclick="deleteLog('${log.logId}')">🗑️</button></td></tr>`;
-            });
+        if (isMobile()) {
+            view.innerHTML = state.logs.length > 0 ? state.logs.map(log => `
+                <div class="card log-card">
+                    <div class="points ${log.points >= 0 ? 'positive' : 'negative'}">${log.points}</div>
+                    <div class="details">
+                        <span class="info"><strong>Équipe :</strong> ${log.teamName || 'N/A'}</span>
+                        <span class="info"><strong>Stand :</strong> ${log.standName || 'N/A'}</span>
+                        <div class="timestamp">${new Date(log.timestamp).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}</div>
+                    </div>
+                    <div class="actions">
+                        <button onclick="deleteLog('${log.logId}')">🗑️</button>
+                    </div>
+                </div>`).join('') : '<p>Aucun log de score pour le moment.</p>';
         } else {
-            html += `<tr><td colspan="5" style="text-align:center;">Aucun log à afficher.</td></tr>`;
+            let html = `<h2>Historique des Scores</h2><div class="table-container"><table><thead><tr><th>Timestamp</th><th>Équipe</th><th>Stand</th><th>Points</th><th>Actions</th></tr></thead><tbody>`;
+            if (state.logs.length > 0) {
+                state.logs.forEach(log => {
+                    html += `<tr><td>${new Date(log.timestamp).toLocaleString('fr-FR')}</td><td>${log.teamName || 'N/A'}</td><td>${log.standName || 'N/A'}</td><td>${log.points}</td><td><button class="action-btn" onclick="openEditLogModal('${log.logId}', ${log.points})">✏️</button><button class="action-btn" onclick="deleteLog('${log.logId}')">🗑️</button></td></tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="5" style="text-align:center;">Aucun log à afficher.</td></tr>`;
+            }
+            html += `</tbody></table></div>`;
+            view.innerHTML = html;
         }
-        html += `</tbody></table></div>`;
-        view.innerHTML = html;
     } catch (error) {
         showMessage(error.message);
     }
@@ -104,12 +130,26 @@ const renderTeams = async () => {
     try {
         state.teams = await apiFetch('/scores');
         const view = document.getElementById('view-teams');
-        let html = `<h2>Gestion des Équipes</h2><div class="table-container"><table><thead><tr><th>Équipe</th><th>Score Total</th><th>Actions</th></tr></thead><tbody>`;
-        state.teams.forEach(team => {
-            html += `<tr><td>${team.name}</td><td>${team.score}</td><td><button class="action-btn" onclick="openManageTeamModal('${team.id}', '${team.name}', ${team.score})">⚙️ Gérer</button></td></tr>`;
-        });
-        html += `</tbody></table></div>`;
-        view.innerHTML = html;
+        if (isMobile()){
+            view.innerHTML = state.teams.map(team => `
+            <div class="card item-card">
+                <div class="info">
+                    <div class="name">${team.name}</div>
+                    <div class="score">${team.score} points</div>
+                </div>
+                <div class="actions-menu">
+                    <button class="kebab-btn" onclick="openManageTeamModal('${team.id}', '${team.name}', ${team.score})">⚙️</button>
+                </div>
+            </div>
+        `).join('');
+        } else {
+            let html = `<h2>Gestion des Équipes</h2><div class="table-container"><table><thead><tr><th>Équipe</th><th>Score Total</th><th>Actions</th></tr></thead><tbody>`;
+            state.teams.forEach(team => {
+                html += `<tr><td>${team.name}</td><td>${team.score}</td><td><button class="action-btn" onclick="openManageTeamModal('${team.id}', '${team.name}', ${team.score})">⚙️ Gérer</button></td></tr>`;
+            });
+            html += `</tbody></table></div>`;
+            view.innerHTML = html;
+        }
     } catch (error) {
         showMessage(error.message);
     }
@@ -118,30 +158,46 @@ const renderTeams = async () => {
 const renderStands = async () => {
     try {
         state.stands = await apiFetch('/admin/stands');
-        const standsToDisplay = state.stands.filter(stand => stand.name !== 'Admin'); 
+        const standsToDisplay = state.stands.filter(stand => stand.name !== 'Admin');
         const view = document.getElementById('view-stands');
-        let html = `<h2>Gestion des Stands <button class="btn btn-primary" onclick="openCreateStandModal()">+ Créer un Stand</button></h2><div class="table-container"><table><thead><tr><th>Nom du Stand</th><th>Statut</th><th>Actions</th></tr></thead><tbody>`;
-        standsToDisplay.forEach(stand => { 
-            const isActif = stand.status === 'ACTIF';
-            const newStatus = isActif ? 'INACTIF' : 'ACTIF';
-            html += `
-                <tr>
-                    <td>${stand.name}</td>
-                    <td><span class="status ${isActif ? 'status-active' : 'status-inactive'}">${stand.status}</span></td>
-                    <td>
-                        <button class="action-btn" onclick="setStandStatus('${stand.id}', '${newStatus}')">${isActif ? 'Désactiver' : 'Activer'}</button>
-                        <button class="action-btn" onclick="openResetPinModal('${stand.id}', '${stand.name}')">🔑 Réinitialiser PIN</button>
-                    </td>
-                </tr>
-            `;
-        });
-        html += `</tbody></table></div>`;
-        view.innerHTML = html;
+        if (isMobile()){
+            let html = `<div style="margin-bottom:1rem;"><button class="btn btn-primary" onclick="openCreateStandModal()">+ Créer un Stand</button></div>`;
+            html += standsToDisplay.map(stand => {
+                const isActif = stand.status === 'ACTIF';
+                const newStatus = isActif ? 'INACTIF' : 'ACTIF';
+                return `
+                <div class="card item-card">
+                    <div class="info">
+                        <div class="name">${stand.name}</div>
+                        <div class="status ${isActif ? 'ACTIF' : ''}">${stand.status}</div>
+                    </div>
+                    <div class="actions-menu">
+                        <button class="kebab-btn" onclick="toggleKebab(event, '${stand.id}', '${newStatus}')">⋮</button>
+                    </div>
+                </div>`;
+            }).join('');
+            view.innerHTML = html;
+        } else {
+            let html = `<h2>Gestion des Stands <button class="btn btn-primary" onclick="openCreateStandModal()">+ Créer un Stand</button></h2><div class="table-container"><table><thead><tr><th>Nom du Stand</th><th>Statut</th><th>Actions</th></tr></thead><tbody>`;
+            standsToDisplay.forEach(stand => {
+                const isActif = stand.status === 'ACTIF';
+                const newStatus = isActif ? 'INACTIF' : 'ACTIF';
+                html += `
+                    <tr>
+                        <td>${stand.name}</td>
+                        <td><span class="status ${isActif ? 'status-active' : 'status-inactive'}">${stand.status}</span></td>
+                        <td>
+                            <button class="action-btn" onclick="setStandStatus('${stand.id}', '${newStatus}')">${isActif ? 'Désactiver' : 'Activer'}</button>
+                            <button class="action-btn" onclick="openResetPinModal('${stand.id}', '${stand.name}')">🔑 Réinitialiser PIN</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            html += `</tbody></table></div>`;
+            view.innerHTML = html;
+        }
     } catch (error) { showMessage(error.message); }
 };
-
-
-// --- Fonctions de Gestion (Modals & Actions) ---
 
 function openEditLogModal(logId, currentPoints) {
     document.getElementById('modal-title').innerText = 'Modifier le Score d\'un Log';
@@ -205,20 +261,6 @@ async function submitCreateStand() {
     }
 }
 
-async function toggleStand(standId, isActive) {
-    const action = isActive ? 'activer' : 'désactiver';
-    const confirmed = await showConfirmationModal(`Êtes-vous sûr de vouloir ${action} ce stand ?`);
-    if (confirmed) {
-        try {
-            await apiFetch(`/admin/stands/${standId}/toggle`, { method: 'PUT', body: JSON.stringify({ isActive }) });
-            showMessage('Statut mis à jour !', 'success');
-            renderStands();
-        } catch (error) {
-            showMessage(error.message);
-        }
-    }
-}
-
 function openResetPinModal(standId, standName) {
     document.getElementById('modal-title').innerText = `Réinitialiser PIN pour ${standName}`;
     document.getElementById('modal-body').innerHTML = `<p>Nouveau PIN (6 chiffres):</p><input type="text" id="reset-pin-input" class="modal-input" maxlength="6">`;
@@ -279,8 +321,6 @@ async function submitManageTeam(teamId) {
     }
 }
 
-// --- Authentification & Initialisation ---
-
 const login = async (e) => {
     e.preventDefault();
     const password = document.getElementById('admin-password').value;
@@ -305,14 +345,50 @@ const logout = () => {
     document.getElementById('login-screen').classList.remove('hidden');
 };
 
+const toggleNav = () => {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('mobile-nav-visible');
+    sidebar.classList.toggle('mobile-nav-hidden');
+};
+
+const closeAllKebabs = () => {
+    document.querySelectorAll('.kebab-menu').forEach(menu => menu.classList.remove('visible'));
+};
+
+const toggleKebab = (event, standId, newStatus) => {
+    event.stopPropagation();
+    const parent = event.target.closest('.actions-menu');
+    let menu = parent.querySelector('.kebab-menu');
+    if (!menu) {
+        menu = document.createElement('div');
+        menu.className = 'kebab-menu';
+        const actionText = newStatus === 'INACTIF' ? 'Désactiver' : 'Activer';
+        menu.innerHTML = `<button onclick="setStandStatus('${standId}', '${newStatus}')">${actionText}</button><button onclick="openResetPinModal('${standId}', 'ce stand')">Réinitialiser PIN</button>`;
+        parent.appendChild(menu);
+    }
+    
+    if (menu.classList.contains('visible')) {
+        menu.classList.remove('visible');
+    } else {
+        closeAllKebabs();
+        menu.classList.add('visible');
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('admin-login-form').addEventListener('submit', login);
     document.getElementById('logout-button').addEventListener('click', logout);
+    
+    if(isMobile()) {
+        document.getElementById('hamburger-btn').addEventListener('click', toggleNav);
+        document.getElementById('logout-button-mobile').addEventListener('click', logout);
+        document.querySelector('.sidebar').classList.add('mobile-nav-hidden');
+        document.body.addEventListener('click', closeAllKebabs);
+    }
 
     document.querySelectorAll('.sidebar nav button').forEach(button => {
         button.addEventListener('click', (e) => {
-            state.currentView = e.target.dataset.view;
-            render();
+            switchView(e.target.dataset.view);
         });
     });
 
@@ -330,10 +406,10 @@ window.submitEditLog = submitEditLog;
 window.deleteLog = deleteLog;
 window.openCreateStandModal = openCreateStandModal;
 window.submitCreateStand = submitCreateStand;
-window.toggleStand = toggleStand;
 window.openResetPinModal = openResetPinModal;
 window.submitResetPin = submitResetPin;
 window.openManageTeamModal = openManageTeamModal;
 window.submitManageTeam = submitManageTeam;
 window.setStandStatus = setStandStatus;
 window.closeModal = closeModal;
+window.toggleKebab = toggleKebab;

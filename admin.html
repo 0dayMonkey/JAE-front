@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-        <script>
-        if (window.innerWidth < 768) {
-            window.location.href = 'admin_mobile.html';
-        }
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin</title>
@@ -24,14 +19,20 @@
         </div>
 
         <div id="dashboard-screen" class="hidden">
+            <header class="mobile-header">
+                <button id="hamburger-btn">☰</button>
+                <h1 id="mobile-header-title">Logs</h1>
+                <button id="logout-button-mobile" class="btn btn-danger">Déconnexion</button>
+            </header>
+
             <aside class="sidebar">
                 <div class="sidebar-header">
                     <h2>JAE Admin</h2>
                 </div>
                 <nav>
-                    <button data-view="logs" class="active">📊 Logs</button>
-                    <button data-view="teams">🏆 Équipes</button>
-                    <button data-view="stands">🏪 Stands</button>
+                    <button data-view="logs" class="active">Logs</button>
+                    <button data-view="teams">Équipes</button>
+                    <button data-view="stands">Stands</button>
                 </nav>
                 <div class="sidebar-footer">
                     <a href="index.html" class="btn btn-secondary">Voir le site public</a>

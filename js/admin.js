@@ -92,23 +92,24 @@ const render = () => {
     }
 };
 
+
 const renderLogs = async () => {
     try {
         state.logs = await apiFetch('/admin/logs');
         const view = document.getElementById('view-logs');
         if (isMobile()) {
-            view.innerHTML = state.logs.length > 0 ? state.logs.map(log => `
-                <div class="card log-card">
-                    <div class="points ${log.points >= 0 ? 'positive' : 'negative'}">${log.points}</div>
+            view.innerHTML = state.logs.length > 0 ? state.logs.map(log => {
+                const teamNameClass = log.teamName ? `team-${log.teamName.charAt(0).toUpperCase() + log.teamName.slice(1)}` : '';
+                return `
+                <div class="card log-card ${teamNameClass}">
                     <div class="details">
                         <span class="info"><strong>Équipe:</strong> ${log.teamName || 'N/A'}</span>
                         <span class="info"><strong>Stand:</strong> ${log.standName || 'N/A'}</span>
                         <div class="timestamp">${new Date(log.timestamp).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' })} ${new Date(log.timestamp).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</div>
                     </div>
-                    <div class="actions">
-                        <button onclick="deleteLog('${log.logId}')">🗑️</button>
-                    </div>
-                </div>`).join('') : '<p>Aucun log de score pour le moment.</p>';
+                    <div class="points ${log.points >= 0 ? 'positive' : 'negative'}">${log.points > 0 ? '+' : ''}${log.points}</div>
+                </div>`
+            }).join('') : '<p>Aucun log de score pour le moment.</p>';
         } else {
             let html = `<h2>Historique des Scores</h2><div class="table-container"><table><thead><tr><th>Timestamp</th><th>Équipe</th><th>Stand</th><th>Points</th><th>Actions</th></tr></thead><tbody>`;
             if (state.logs.length > 0) {
@@ -125,6 +126,8 @@ const renderLogs = async () => {
         showMessage(error.message);
     }
 };
+
+
 
 const renderTeams = async () => {
     try {

@@ -83,7 +83,7 @@ th { font-weight: 900; }
 .mobile-header { display: none; }
 .card { display: none; }
 
-@media (max-width: 767px) {
+@media (max-width: 760px) {
     .sidebar {
         position: fixed;
         left: 0;
@@ -122,22 +122,55 @@ th { font-weight: 900; }
     .card {
         display: flex;
         background: var(--color-surface);
-        border-radius: 12px;
+        border-radius: 8px; 
         margin-bottom: 1rem;
-        padding: 1rem;
         box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         align-items: center;
+        overflow: hidden; 
+        border-left: 5px solid; }
+    .log-card {
+        padding: 1rem;
+        border-color: var(--color-text-light); 
     }
-    .log-card .points { font-size: 1.5rem; font-weight: 900; min-width: 50px; text-align: center; }
+
+    .log-card.team-Jaune { border-color: var(--team-color-Jaune); }
+    .log-card.team-Rouge { border-color: var(--team-color-Rouge); }
+    .log-card.team-Vert { border-color: var(--team-color-Vert); }
+    .log-card.team-Bleu { border-color: var(--team-color-Bleu); }
+    .log-card.team-Violet { border-color: var(--team-color-Violet); }
+
+    .log-card .details {
+        flex-grow: 1;
+        padding-left: 1rem;
+        border-left: none;
+        margin-left: 0;
+    }
+
+
+    .log-card .points {
+        font-size: 1.8rem;
+        font-weight: 900;
+        min-width: 60px;
+        text-align: right;
+        padding-right: 1rem;
+    }    
     .log-card .points.positive { color: var(--color-success); }
     .log-card .points.negative { color: var(--color-error); }
     .log-card .details { flex-grow: 1; padding-left: 1rem; border-left: 1px solid #eee; margin-left: 1rem; }
     .log-card .info { display: block; font-size: 0.9rem;}
-    .log-card .info strong { color: var(--color-secondary); }
+    .log-card .info strong {
+        color: var(--color-secondary);
+        display: inline-block;
+        width: 55px; 
+    }    
     .log-card .timestamp { font-size: 0.8rem; color: var(--color-text-light); margin-top: 0.5rem; }
     .log-card .actions button { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--color-text-light); }
     
-    .item-card { justify-content: space-between; }
+    .item-card { 
+      justify-content: space-between;
+      padding: 1rem;
+      border-left: none;
+    }
     .item-card .info { flex-grow: 1; }
     .item-card .name { font-weight: 700; font-size: 1.1rem; }
     .item-card .status, .item-card .score { font-size: 0.9rem; color: var(--color-text-light); }

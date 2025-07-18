@@ -1,4 +1,4 @@
-const API_URL = 'http://your-backend-vps-ip:3000/api'; // Mettez l'IP de votre VPS ici
+const API_URL = 'http://miaou.vps.webdock.cloud:3000/api'; // Mettez l'IP de votre VPS ici
 
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('admin-login-form');

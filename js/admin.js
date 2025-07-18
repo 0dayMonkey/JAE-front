@@ -68,10 +68,11 @@ const switchView = (viewName) => {
     
     const navButtons = document.querySelectorAll('.sidebar nav button');
     navButtons.forEach(b => b.classList.remove('active'));
-    document.querySelector(`.sidebar nav button[data-view="${viewName}"]`).classList.add('active');
+    const currentButton = document.querySelector(`.sidebar nav button[data-view="${viewName}"]`);
+    if(currentButton) currentButton.classList.add('active');
 
     if (isMobile()) {
-        document.getElementById('mobile-header-title').textContent = document.querySelector(`.sidebar nav button[data-view="${viewName}"]`).textContent;
+        document.getElementById('mobile-header-title').textContent = currentButton.textContent;
         toggleNav();
     }
     
@@ -91,7 +92,6 @@ const render = () => {
             break;
     }
 };
-
 
 const renderLogs = async () => {
     try {
@@ -126,8 +126,6 @@ const renderLogs = async () => {
         showMessage(error.message);
     }
 };
-
-
 
 const renderTeams = async () => {
     try {
@@ -381,9 +379,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('admin-login-form').addEventListener('submit', login);
     document.getElementById('logout-button').addEventListener('click', logout);
     
-    if(isMobile()) {
+    if (isMobile()) {
         document.getElementById('hamburger-btn').addEventListener('click', toggleNav);
-        document.getElementById('logout-button-mobile').addEventListener('click', logout);
+        document.getElementById('close-nav-btn').addEventListener('click', toggleNav);
         document.body.addEventListener('click', (e) => {
             if (!e.target.closest('.actions-menu')) {
                 closeAllKebabs();

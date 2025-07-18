@@ -113,9 +113,9 @@ h2, h3 {
     gap: 1rem;
 }
 
-#pin-input {
+    #pin-input {
     padding: 1rem;
-    font-size: 1.2rem;
+    font-size: 16px; /* Augmenté à 16px pour éviter le zoom */
     text-align: center;
     border: 2px solid #ddd;
     border-radius: 8px;
@@ -268,11 +268,12 @@ h2, h3 {
     height: 50px;
     font-size: 2rem;
     font-weight: 900;
-    border-radius: 50%;
+    border-radius: 12px; /* Changé pour un carré arrondi */
     border: 2px solid var(--color-primary);
     background-color: var(--color-surface);
     color: var(--color-primary);
     cursor: pointer;
+    touch-action: manipulation; /* Ajout pour désactiver le zoom au clic */
 }
 
 #points-display {
@@ -317,4 +318,28 @@ h2, h3 {
         height: 60px;
         padding-bottom: 0;
     }
+
+.points-selector button {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+    font-weight: 900;
+    border-radius: 12px; /* Changé pour un carré arrondi */
+    border: 2px solid var(--color-primary);
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+    cursor: pointer;
+    touch-action: manipulation; /* Ajout pour désactiver le zoom au clic */
 }
+
+    #pin-input {
+    padding: 1rem;
+    font-size: 16px; /* Augmenté à 16px pour éviter le zoom */
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+}
+}
+
+
+

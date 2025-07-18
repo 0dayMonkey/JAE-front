@@ -73,15 +73,16 @@ document.addEventListener('DOMContentLoaded', () => {
             square.style.backgroundColor = `var(--team-color-${team.name})`;
             square.title = team.name;
             
-            square.addEventListener('click', () => {
+            square.addEventListener('click', (event) => {
                 const currentSelected = document.querySelector('.team-square.selected');
                 if (currentSelected) {
                     currentSelected.classList.remove('selected');
                 }
-                square.classList.add('selected');
-                selectedTeamId = team.id;
-                submitScoreButton.style.backgroundColor = teamColor;
+                const clickedSquare = event.currentTarget;
+                clickedSquare.classList.add('selected');
+                selectedTeamId = clickedSquare.dataset.teamId;
 
+                submitScoreButton.style.backgroundColor = clickedSquare.style.backgroundColor;
             });
             teamSelectionSquares.appendChild(square);
         });

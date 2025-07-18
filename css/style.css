@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap');
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 :root {
     --e-global-color-primary: #50ACC4;
     --e-global-color-secondary: #303030;
@@ -38,6 +49,7 @@ h1 {
     font-size: 2.5rem;
     font-weight: 900;
     margin-bottom: 3rem;
+    box-shadow: 0 5px 25px rgba(80, 172, 196, 0.4);
 }
 
 .container {
@@ -55,19 +67,22 @@ h1 {
 
 .leaderboard-card {
     background-color: white;
-    border: 2px solid var(--e-global-color-secondary);
+    border: 2px solid; /* La couleur est définie par la classe d'équipe */
     border-radius: 16px;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    transition: transform 0.2s ease;
     min-height: 200px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.5s ease-out forwards;
 }
 
 .leaderboard-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 
 .team-border-Jaune { border-color: var(--team-color-Jaune); }
@@ -95,11 +110,11 @@ h1 {
     text-transform: uppercase;
 }
 
-.team-tag-Jaune { background-color: var(--team-color-Jaune); }
-.team-tag-Rouge { background-color: var(--team-color-Rouge); }
-.team-tag-Vert { background-color: var(--team-color-Vert); }
-.team-tag-Bleu { background-color: var(--team-color-Bleu); }
-.team-tag-Violet { background-color: var(--team-color-Violet); }
+.team-tag-Jaune { background-color: var(--team-color-Jaune); box-shadow: 0 4px 15px rgba(241, 196, 15, 0.5); }
+.team-tag-Rouge { background-color: var(--team-color-Rouge); box-shadow: 0 4px 15px rgba(231, 76, 60, 0.5); }
+.team-tag-Vert { background-color: var(--team-color-Vert); box-shadow: 0 4px 15px rgba(46, 204, 113, 0.5); }
+.team-tag-Bleu { background-color: var(--team-color-Bleu); box-shadow: 0 4px 15px rgba(52, 152, 219, 0.5); }
+.team-tag-Violet { background-color: var(--team-color-Violet); box-shadow: 0 4px 15px rgba(155, 89, 182, 0.5); }
 
 .card-score {
     font-size: 2.5rem;

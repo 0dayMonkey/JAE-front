@@ -1,15 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 
 :root {
     --color-primary: #50ACC4;
     --color-secondary: #303030;
-    --color-text: #34495e;
-    --color-accent: #FF8282;
+    --color-text-dark: #34495e;
+    --color-text-light: #ffffff;
     --color-background: #FBFBFB;
     --color-surface: #ffffff;
-    --color-red: #e74c3c;
-    --color-green: #2ecc71;
-    --color-border: #dee2e6;
     --shadow-subtle: 0 4px 15px rgba(0,0,0,0.08);
     --glow-primary: 0px 0px 26px 13px rgba(81, 171, 195, 0.5);
     
@@ -19,7 +16,7 @@
 body {
     font-family: var(--font-family-main);
     background-color: var(--color-background);
-    color: var(--color-text);
+    color: var(--color-text-dark);
     margin: 0;
     padding: 2rem;
     display: flex;
@@ -39,48 +36,33 @@ h1 {
     box-shadow: var(--glow-primary);
 }
 
-h2 {
-    text-align: center;
-    color: var(--color-secondary);
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-}
-
 .container {
     width: 100%;
-    max-width: 900px; /* Largeur augmentée pour la grille */
-    background: var(--color-surface);
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow-subtle);
+    max-width: 900px;
+    background: transparent; /* Le conteneur devient transparent */
+    padding: 0;
+    box-shadow: none;
 }
 
-/* --- NOUVEAUX STYLES POUR LA GRILLE DE SCORES --- */
+/* --- GRILLE DE SCORE - NOUVELLE VERSION --- */
 .leaderboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .leaderboard-card {
-    background-color: var(--color-surface);
-    border: 2px solid var(--color-border);
+    color: var(--color-text-light); /* Texte blanc pour toutes les cartes */
     border-radius: 12px;
     padding: 1.5rem;
     text-align: center;
-    box-shadow: var(--shadow-subtle);
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.leaderboard-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .card-rank {
     font-size: 1.5rem;
     font-weight: 900;
-    color: var(--color-primary);
+    opacity: 0.8;
     margin-bottom: 0.5rem;
 }
 
@@ -93,19 +75,44 @@ h2 {
 .card-score {
     font-size: 3.5rem;
     font-weight: 900;
-    color: var(--color-secondary);
     margin-top: 1rem;
 }
 
-/* --- Couleurs des équipes appliquées aux cartes --- */
-.team-Jaune { border-color: #f1c40f; color: #f1c40f;}
-.team-Rouge { border-color: #c0392b; color: #c0392b;}
-.team-Vert { border-color: #27ae60; color: #27ae60;}
-.team-Bleu { border-color: #3498db; color: #3498db;}
-.team-Violet { border-color: #8e44ad; color: #8e44ad;}
-/* --- FIN DES NOUVEAUX STYLES --- */
+/* --- Couleurs de fond et ombres portées par équipe --- */
+.team-Jaune {
+    background-color: #f1c40f;
+    box-shadow: 0 5px 20px rgba(241, 196, 15, 0.4);
+}
+.team-Rouge {
+    background-color: #e74c3c;
+    box-shadow: 0 5px 20px rgba(231, 76, 60, 0.4);
+}
+.team-Vert {
+    background-color: #2ecc71;
+    box-shadow: 0 5px 20px rgba(46, 204, 113, 0.4);
+}
+.team-Bleu {
+    background-color: #3498db;
+    box-shadow: 0 5px 20px rgba(52, 152, 219, 0.4);
+}
+.team-Violet {
+    background-color: #9b59b6;
+    box-shadow: 0 5px 20px rgba(155, 89, 182, 0.4);
+}
 
+.leaderboard-card:hover {
+    transform: scale(1.05);
+}
 
+/* Styles pour les formulaires et autres pages */
+.form-container {
+    max-width: 800px;
+    background: var(--color-surface);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-subtle);
+    width: 100%;
+}
 form {
     display: flex;
     flex-direction: column;
@@ -120,12 +127,6 @@ input, select, button {
     font-family: var(--font-family-main);
 }
 
-input:focus, select:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(80, 172, 196, 0.3);
-}
-
 button {
     background-color: var(--color-primary);
     color: white;
@@ -134,40 +135,7 @@ button {
     font-weight: 600;
 }
 
-button:hover {
-    background-color: #3aabd0;
-    transform: translateY(-2px);
-}
-
-.hidden { display: none; }
-
-#message {
-    text-align: center;
-    padding: 1rem;
-    margin-top: 1rem;
-    border-radius: 8px;
-    font-weight: 600;
-    border: 1px solid transparent;
-}
-
-.success {
-    background-color: rgba(46, 204, 113, 0.1);
-    color: #2ecc71;
-    border-color: #2ecc71;
-}
-
-.error {
-    background-color: rgba(231, 76, 60, 0.1);
-    color: #e74c3c;
-    border-color: #e74c3c;
-}
-
-
 @media (max-width: 600px) {
     body { padding: 1rem; }
     h1 { font-size: 1.8rem; }
-    .container { padding: 1.5rem; }
-    .leaderboard-grid { grid-template-columns: 1fr; } 
-    .card-score { font-size: 2.8rem; }
-    .card-team-name { font-size: 1.5rem; }
 }

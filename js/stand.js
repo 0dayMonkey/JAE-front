@@ -81,7 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const clickedSquare = event.currentTarget;
                 clickedSquare.classList.add('selected');
                 selectedTeamId = clickedSquare.dataset.teamId;
-
+                
+                submitScoreButton.disabled = false;
                 submitScoreButton.style.backgroundColor = clickedSquare.style.backgroundColor;
             });
             teamSelectionSquares.appendChild(square);
@@ -89,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const updateTeamsDisplay = async () => {
+        const scrollY = window.scrollY;
         try {
             const response = await fetch(`${API_URL}/scores`);
             if (!response.ok) throw new Error('Impossible de rafraîchir les scores.');
@@ -103,6 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } catch (error) {
             showMessage(error.message);
+        } finally {
+            window.scrollTo(0, scrollY);
         }
     };
 
@@ -172,7 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentSelected = document.querySelector('.team-square.selected');
             if (currentSelected) currentSelected.classList.remove('selected');
             selectedTeamId = null;
-            submitScoreButton.style.backgroundColor = 'var(--color-success)';
+
+            submitScoreButton.disabled = true;
+            submitScoreButton.style.backgroundColor = '';
 
             await updateTeamsDisplay();
 

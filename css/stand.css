@@ -113,9 +113,9 @@ h2, h3 {
     gap: 1rem;
 }
 
-    #pin-input {
+#pin-input {
     padding: 1rem;
-    font-size: 16px; /* Augmenté à 16px pour éviter le zoom */
+    font-size: 16px;
     text-align: center;
     border: 2px solid #ddd;
     border-radius: 8px;
@@ -268,12 +268,17 @@ h2, h3 {
     height: 50px;
     font-size: 2rem;
     font-weight: 900;
-    border-radius: 12px; /* Changé pour un carré arrondi */
+    border-radius: 12px;
     border: 2px solid var(--color-primary);
     background-color: var(--color-surface);
     color: var(--color-primary);
     cursor: pointer;
-    touch-action: manipulation; /* Ajout pour désactiver le zoom au clic */
+    touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    padding-bottom: 4px;
 }
 
 #points-display {
@@ -293,7 +298,14 @@ h2, h3 {
     background-color: var(--color-success);
     color: white;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
+
+#submit-score-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 
 @media (min-width: 768px) {
     body {
@@ -318,28 +330,4 @@ h2, h3 {
         height: 60px;
         padding-bottom: 0;
     }
-
-.points-selector button {
-    width: 50px;
-    height: 50px;
-    font-size: 2rem;
-    font-weight: 900;
-    border-radius: 12px; /* Changé pour un carré arrondi */
-    border: 2px solid var(--color-primary);
-    background-color: var(--color-surface);
-    color: var(--color-primary);
-    cursor: pointer;
-    touch-action: manipulation; /* Ajout pour désactiver le zoom au clic */
 }
-
-    #pin-input {
-    padding: 1rem;
-    font-size: 16px; /* Augmenté à 16px pour éviter le zoom */
-    text-align: center;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-}
-}
-
-
-

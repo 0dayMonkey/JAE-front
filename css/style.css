@@ -1,21 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap');
 
 :root {
-    --color-primary: #5bc0de; /* Updated primary color */
-    --color-primary-darker: #3aabd0;
-    --color-secondary: #2c3e50;
-    --color-background: #ecf0f1;
-    --color-surface: #ffffff;
+    --color-primary: #50ACC4;
+    --color-secondary: #303030;
     --color-text: #34495e;
+    --color-accent: #FF8282;
+    --color-background: #FBFBFB;
+    --color-surface: #ffffff;
     --color-red: #e74c3c;
     --color-green: #2ecc71;
     --color-border: #bdc3c7;
-    --shadow: 0 4px 15px rgba(0,0,0,0.08);
-    --glow: 0 0 10px rgba(91, 192, 222, 0.7); /* Glow effect color */
+    --shadow-subtle: 0 4px 15px rgba(0,0,0,0.08);
+    --glow-primary: 0px 0px 26px 13px rgba(81, 171, 195, 0.5);
+    
+    --font-family-main: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* Updated font */
+    font-family: var(--font-family-main);
     background-color: var(--color-background);
     color: var(--color-text);
     margin: 0;
@@ -26,23 +28,22 @@ body {
 }
 
 h1 {
-    background-color: var(--color-secondary);
+    background-color: var(--color-primary);
     color: var(--color-surface);
     padding: 1rem 2rem;
     border-radius: 8px;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     font-size: 2.5rem;
+    font-weight: 900;
     text-align: center;
-    box-shadow: var(--shadow);
-    text-shadow: 2px 2px 5px rgba(91, 192, 222, 0.8); /* Glow effect on text */
+    box-shadow: var(--glow-primary);
 }
 
 h2 {
     text-align: center;
     color: var(--color-secondary);
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 1.5rem;
-    text-shadow: 1px 1px 3px rgba(91, 192, 222, 0.8); /* Glow effect on text */
 }
 
 .container {
@@ -51,7 +52,7 @@ h2 {
     background: var(--color-surface);
     padding: 2.5rem;
     border-radius: 12px;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-subtle);
 }
 
 .leaderboard {
@@ -67,9 +68,8 @@ h2 {
 }
 
 .leaderboard th {
-    font-weight: 600;
+    font-weight: 700;
     color: var(--color-secondary);
-    background-color: rgba(44, 62, 80, 0.05);
 }
 
 .leaderboard tr:last-child td {
@@ -86,7 +86,6 @@ h2 {
 .team-Bleu { color: #3498db; font-weight: bold; }
 .team-Violet { color: #8e44ad; font-weight: bold; }
 
-
 form {
     display: flex;
     flex-direction: column;
@@ -98,14 +97,14 @@ input, select, button {
     font-size: 1rem;
     border-radius: 8px;
     border: 1px solid var(--color-border);
-    font-family: 'Montserrat', sans-serif; /* Updated font */
+    font-family: var(--font-family-main);
     transition: all 0.2s ease-in-out;
 }
 
 input:focus, select:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(91, 192, 222, 0.3); /* Updated focus glow */
+    box-shadow: 0 0 0 3px rgba(80, 172, 196, 0.3);
 }
 
 button {
@@ -114,13 +113,13 @@ button {
     border: none;
     cursor: pointer;
     font-weight: 600;
-    box-shadow: var(--glow); /* Initial button glow */
+    transition: all 0.2s ease-in-out;
 }
 
 button:hover {
-    background-color: var(--color-primary-darker);
+    background-color: #3aabd0; /* A slightly darker shade of primary */
     transform: translateY(-2px);
-    box-shadow: 0 0 0 5px rgba(91, 192, 222, 0.5); /* Hover glow */
+    box-shadow: var(--shadow-subtle);
 }
 
 .hidden {
@@ -148,33 +147,11 @@ button:hover {
     border-color: var(--color-red);
 }
 
-nav {
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-nav a {
-    margin: 0 1rem;
-    color: var(--color-secondary);
-    text-decoration: none;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: all 0.2s ease-in-out;
-}
-
-nav a:hover {
-    background-color: rgba(44, 62, 80, 0.1);
-    box-shadow: 0 0 5px rgba(44, 62, 80, 0.3); /* Subtle hover glow on nav links */
-}
-
 #logout-button {
     background-color: var(--color-red);
-    box-shadow: var(--glow); /* Logout button glow */
 }
 #logout-button:hover {
     background-color: #c0392b;
-    box-shadow: 0 0 0 5px rgba(91, 192, 222, 0.5); /* Hover glow */
 }
 
 @media (max-width: 600px) {

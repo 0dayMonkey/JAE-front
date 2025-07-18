@@ -44,9 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+
     const displayStands = (stands) => {
         standButtonsContainer.innerHTML = '';
-        stands.forEach(stand => {
+        const filteredStands = stands.filter(stand => stand.name !== 'Admin' && stand.status === 'ACTIF'); 
+        filteredStands.forEach(stand => {
             const button = document.createElement('button');
             button.className = 'stand-button';
             button.textContent = stand.name;

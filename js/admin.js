@@ -118,9 +118,10 @@ const renderTeams = async () => {
 const renderStands = async () => {
     try {
         state.stands = await apiFetch('/admin/stands');
+        const standsToDisplay = state.stands.filter(stand => stand.name !== 'Admin'); 
         const view = document.getElementById('view-stands');
         let html = `<h2>Gestion des Stands <button class="btn btn-primary" onclick="openCreateStandModal()">+ Créer un Stand</button></h2><div class="table-container"><table><thead><tr><th>Nom du Stand</th><th>Statut</th><th>Actions</th></tr></thead><tbody>`;
-        state.stands.forEach(stand => {
+        standsToDisplay.forEach(stand => { 
             const isActif = stand.status === 'ACTIF';
             const newStatus = isActif ? 'INACTIF' : 'ACTIF';
             html += `

@@ -43,7 +43,7 @@ body { font-family: var(--font-family-main); background-color: var(--color-backg
 #admin-login-form button { padding: 0.8rem; border-radius: 8px; border: none; background-color: var(--color-primary); color: white; font-weight: 700; cursor: pointer; }
 
 #dashboard-screen { display: flex; height: 100vh; }
-.sidebar { width: 240px; background: var(--color-surface); display: flex; flex-direction: column; border-right: 1px solid #e0e0e0; }
+.sidebar { width: 240px; background: var(--color-surface); display: flex; flex-direction: column; border-right: 1px solid #e0e0e0; transition: transform 0.3s ease-in-out; }
 .sidebar-header { padding: 1.5rem; text-align: center; border-bottom: 1px solid #e0e0e0; }
 .sidebar-header h2 { margin: 0; }
 .sidebar nav { flex-grow: 1; padding: 1rem 0; }
@@ -83,13 +83,24 @@ th { font-weight: 900; }
 .mobile-header { display: none; }
 .card { display: none; }
 
-@media (max-width: 768px) {
-    .sidebar { display: none; }
-    .table-container { display: none; }
-    .main-content h2 { display: none; }
+@media (max-width: 767px) {
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        z-index: 1001;
+        transform: translateX(-100%);
+    }
+    .sidebar.mobile-nav-visible {
+        transform: translateX(0);
+    }
+    .sidebar-header, .sidebar-footer { display: none; }
+    
+    .table-container, .main-content h2 { display: none; }
 
     #dashboard-screen { flex-direction: column; height: auto; }
-    .main-content { padding: 1rem; }
+    .main-content { padding: 1rem; margin-top: 60px; }
 
     .mobile-header {
         display: flex;
@@ -104,29 +115,9 @@ th { font-weight: 900; }
         width: 100%;
         z-index: 100;
     }
-    #hamburger-btn { font-size: 1.5rem; background: none; border: none; cursor: pointer; }
+    #hamburger-btn { font-size: 1.5rem; background: none; border: none; cursor: pointer; color: var(--color-text); padding: 0.5rem; }
     #mobile-header-title { font-size: 1.2rem; margin: 0; }
     #logout-button-mobile { font-size: 0.8rem; padding: 0.5rem 0.8rem; }
-    
-    .sidebar.mobile-nav-visible {
-        display: flex;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 280px;
-        height: 100%;
-        z-index: 1001;
-        transform: translateX(0);
-        transition: transform 0.3s ease-in-out;
-        padding-top: 4rem;
-        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-        flex-direction: column;
-    }
-     .sidebar.mobile-nav-hidden {
-        transform: translateX(-100%);
-     }
-
-    .main-content { margin-top: 60px; }
 
     .card {
         display: flex;
@@ -140,8 +131,8 @@ th { font-weight: 900; }
     .log-card .points { font-size: 1.5rem; font-weight: 900; min-width: 50px; text-align: center; }
     .log-card .points.positive { color: var(--color-success); }
     .log-card .points.negative { color: var(--color-error); }
-    .log-card .details { flex-grow: 1; padding: 0 1rem; border-left: 1px solid #eee; margin-left: 1rem; }
-    .log-card .info { display: block; }
+    .log-card .details { flex-grow: 1; padding-left: 1rem; border-left: 1px solid #eee; margin-left: 1rem; }
+    .log-card .info { display: block; font-size: 0.9rem;}
     .log-card .info strong { color: var(--color-secondary); }
     .log-card .timestamp { font-size: 0.8rem; color: var(--color-text-light); margin-top: 0.5rem; }
     .log-card .actions button { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--color-text-light); }
@@ -154,8 +145,8 @@ th { font-weight: 900; }
     .item-card .score { color: var(--color-primary); font-weight: 900; font-size: 1.1rem; }
     
     .actions-menu { position: relative; }
-    .kebab-btn { font-size: 1.5rem; background: none; border: none; }
-    .kebab-menu { display: none; position: absolute; top: 100%; right: 0; background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 10; overflow: hidden; }
+    .kebab-btn { font-size: 1.5rem; background: none; border: none; padding: 0.5rem; }
+    .kebab-menu { display: none; position: absolute; top: 100%; right: 0; background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 10; overflow: hidden; width: max-content; }
     .kebab-menu.visible { display: block; }
-    .kebab-menu button { display: block; width: 100%; padding: 0.8rem 1.5rem; background: none; border: none; text-align: left; }
+    .kebab-menu button { display: block; width: 100%; padding: 0.8rem 1.5rem; background: none; border: none; text-align: left; font-size: 0.9rem; }
 }

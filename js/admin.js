@@ -101,9 +101,9 @@ const renderLogs = async () => {
                 <div class="card log-card">
                     <div class="points ${log.points >= 0 ? 'positive' : 'negative'}">${log.points}</div>
                     <div class="details">
-                        <span class="info"><strong>Équipe :</strong> ${log.teamName || 'N/A'}</span>
-                        <span class="info"><strong>Stand :</strong> ${log.standName || 'N/A'}</span>
-                        <div class="timestamp">${new Date(log.timestamp).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}</div>
+                        <span class="info"><strong>Équipe:</strong> ${log.teamName || 'N/A'}</span>
+                        <span class="info"><strong>Stand:</strong> ${log.standName || 'N/A'}</span>
+                        <div class="timestamp">${new Date(log.timestamp).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' })} ${new Date(log.timestamp).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</div>
                     </div>
                     <div class="actions">
                         <button onclick="deleteLog('${log.logId}')">🗑️</button>
@@ -164,7 +164,6 @@ const renderStands = async () => {
             let html = `<div style="margin-bottom:1rem;"><button class="btn btn-primary" onclick="openCreateStandModal()">+ Créer un Stand</button></div>`;
             html += standsToDisplay.map(stand => {
                 const isActif = stand.status === 'ACTIF';
-                const newStatus = isActif ? 'INACTIF' : 'ACTIF';
                 return `
                 <div class="card item-card">
                     <div class="info">
@@ -172,7 +171,7 @@ const renderStands = async () => {
                         <div class="status ${isActif ? 'ACTIF' : ''}">${stand.status}</div>
                     </div>
                     <div class="actions-menu">
-                        <button class="kebab-btn" onclick="toggleKebab(event, '${stand.id}', '${newStatus}')">⋮</button>
+                        <button class="kebab-btn" onclick="toggleKebab(event, '${stand.id}', '${stand.status}')">⋮</button>
                     </div>
                 </div>`;
             }).join('');
@@ -346,23 +345,23 @@ const logout = () => {
 };
 
 const toggleNav = () => {
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.classList.toggle('mobile-nav-visible');
-    sidebar.classList.toggle('mobile-nav-hidden');
+    document.querySelector('.sidebar').classList.toggle('mobile-nav-visible');
 };
 
 const closeAllKebabs = () => {
     document.querySelectorAll('.kebab-menu').forEach(menu => menu.classList.remove('visible'));
 };
 
-const toggleKebab = (event, standId, newStatus) => {
+const toggleKebab = (event, standId, currentStatus) => {
     event.stopPropagation();
     const parent = event.target.closest('.actions-menu');
     let menu = parent.querySelector('.kebab-menu');
+    
     if (!menu) {
         menu = document.createElement('div');
         menu.className = 'kebab-menu';
-        const actionText = newStatus === 'INACTIF' ? 'Désactiver' : 'Activer';
+        const newStatus = currentStatus === 'ACTIF' ? 'INACTIF' : 'ACTIF';
+        const actionText = currentStatus === 'ACTIF' ? 'Désactiver' : 'Activer';
         menu.innerHTML = `<button onclick="setStandStatus('${standId}', '${newStatus}')">${actionText}</button><button onclick="openResetPinModal('${standId}', 'ce stand')">Réinitialiser PIN</button>`;
         parent.appendChild(menu);
     }
@@ -382,8 +381,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if(isMobile()) {
         document.getElementById('hamburger-btn').addEventListener('click', toggleNav);
         document.getElementById('logout-button-mobile').addEventListener('click', logout);
-        document.querySelector('.sidebar').classList.add('mobile-nav-hidden');
-        document.body.addEventListener('click', closeAllKebabs);
+        document.body.addEventListener('click', (e) => {
+            if (!e.target.closest('.actions-menu')) {
+                closeAllKebabs();
+            }
+            if (!e.target.closest('.sidebar') && !e.target.matches('#hamburger-btn')) {
+                document.querySelector('.sidebar').classList.remove('mobile-nav-visible');
+            }
+        });
     }
 
     document.querySelectorAll('.sidebar nav button').forEach(button => {

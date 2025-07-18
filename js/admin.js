@@ -121,13 +121,22 @@ const renderStands = async () => {
         const view = document.getElementById('view-stands');
         let html = `<h2>Gestion des Stands <button class="btn btn-primary" onclick="openCreateStandModal()">+ Créer un Stand</button></h2><div class="table-container"><table><thead><tr><th>Nom du Stand</th><th>Statut</th><th>Actions</th></tr></thead><tbody>`;
         state.stands.forEach(stand => {
-            html += `<tr><td>${stand.name}</td><td>${stand.isActive ? '✅ Actif' : '❌ Inactif'}</td><td><button class="action-btn" onclick="toggleStand('${stand.id}', ${!stand.isActive})">${stand.isActive ? 'Désactiver' : 'Activer'}</button><button class="action-btn" onclick="openResetPinModal('${stand.id}', '${stand.name}')">🔑 Réinitialiser PIN</button></td></tr>`;
+            const isActif = stand.status === 'ACTIF';
+            const newStatus = isActif ? 'INACTIF' : 'ACTIF';
+            html += `
+                <tr>
+                    <td>${stand.name}</td>
+                    <td><span class="status ${isActif ? 'status-active' : 'status-inactive'}">${stand.status}</span></td>
+                    <td>
+                        <button class="action-btn" onclick="setStandStatus('${stand.id}', '${newStatus}')">${isActif ? 'Désactiver' : 'Activer'}</button>
+                        <button class="action-btn" onclick="openResetPinModal('${stand.id}', '${stand.name}')">🔑 Réinitialiser PIN</button>
+                    </td>
+                </tr>
+            `;
         });
         html += `</tbody></table></div>`;
         view.innerHTML = html;
-    } catch (error) {
-        showMessage(error.message);
-    }
+    } catch (error) { showMessage(error.message); }
 };
 
 
@@ -139,7 +148,17 @@ function openEditLogModal(logId, currentPoints) {
     document.getElementById('modal-actions').innerHTML = `<button class="btn btn-secondary" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="submitEditLog('${logId}')">Valider</button>`;
     document.getElementById('modal-container').classList.remove('hidden');
 }
-
+async function setStandStatus(standId, newStatus) {
+    const action = newStatus === 'ACTIF' ? 'activer' : 'désactiver';
+    const confirmed = await showConfirmationModal(`Êtes-vous sûr de vouloir ${action} ce stand ?`);
+    if (confirmed) {
+        try {
+            await apiFetch(`/admin/stands/${standId}/status`, { method: 'PUT', body: JSON.stringify({ status: newStatus }) });
+            showMessage('Statut mis à jour !', 'success');
+            renderStands();
+        } catch (error) { showMessage(error.message); }
+    }
+}
 async function submitEditLog(logId) {
     const newPoints = document.getElementById('edit-points-input').value;
     try {
@@ -316,4 +335,5 @@ window.openResetPinModal = openResetPinModal;
 window.submitResetPin = submitResetPin;
 window.openManageTeamModal = openManageTeamModal;
 window.submitManageTeam = submitManageTeam;
+window.setStandStatus = setStandStatus;
 window.closeModal = closeModal;
